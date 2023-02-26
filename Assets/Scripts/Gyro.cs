@@ -6,56 +6,63 @@ using UnityEngine.UI;
 
 public class Gyro : MonoBehaviour
 {
-    [SerializeField]
     Transform m_transform;
 
     Quaternion currentGyro;
+
+    bool mousemode;
+
+    [SerializeField]
+    public GameObject VRCanvas, MouseCanvas;
 
     
 
     readonly Quaternion _BASE_ROTATION = Quaternion.Euler(90, 0, 90);
 
-    [SerializeField]
-    Cinemachine.CinemachineDollyCart cart;
-    [SerializeField]
-    Text gyroText;
+ 
 
     // Start is called before the first frame update
     void Start()
     {
-        //cart = GameObject.Find("DollyCart").GetComponent<Cinemachine.CinemachineDollyCart>();
-        Input.gyro.enabled = true;
-        //gyroText = GameObject.Find("GyroText").GetComponent<Text>();
+        mousemode = ParaManager.instance.mousemode;
+        
+
+        if (mousemode)
+        {
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 90);
+            Input.gyro.enabled = true;
+        }
         m_transform = transform;
-        if (!cart) return;
-        cart.m_Speed = CameraRayCast.railSpeed;
         Screen.orientation = ScreenOrientation.Portrait;
     }
 
+    float xRotation = 0f;
     // Update is called once per frame
     void Update()
     {
-        Quaternion gyro = Input.gyro.attitude;
-        if(gyroText != null)
-        gyroText.text = $"enabled: {Input.gyro.enabled} attitude: {Input.gyro.attitude}";
 
-        m_transform.localRotation = _BASE_ROTATION * (new Quaternion(-gyro.x, -gyro.y, gyro.z, gyro.w));
-
-        if (Input.GetMouseButtonDown(1))
+        if (mousemode)
         {
-            SceneManager.LoadScene("Title");
-        }
-    }
+            float mouseX = Input.GetAxis("Mouse X") * 300 * Time.deltaTime;
+            float mouseY = Input.GetAxis("Mouse Y") * 300 * Time.deltaTime;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        string obj_name = other.gameObject.name;
-        if (obj_name == "Teleporter1")
+            xRotation -= mouseY;
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+            transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+            transform.parent.Rotate(Vector3.up * mouseX);
+        }
+        else
         {
-            int num = SceneManager.sceneCountInBuildSettings;
-            SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex + 1)%num);
+            Quaternion gyro = Input.gyro.attitude;
+            m_transform.localRotation = _BASE_ROTATION * (new Quaternion(-gyro.x, -gyro.y, gyro.z, gyro.w));
+            if (Input.GetMouseButtonDown(1))
+            {
+                SceneManager.LoadScene("Title");
+            }
         }
-    }
 
-
+    }  
 }

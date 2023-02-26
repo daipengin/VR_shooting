@@ -6,23 +6,13 @@ using UnityEngine.UI;
 
 public class CameraRayCast : MonoBehaviour
 {
-    string currentButton;
 
     float timer = 0;
 
     [SerializeField]
     float selectTime;
-
-    [SerializeField]
-    Text currentSpeedText;
-
-
-    [SerializeField]
-    Image selectber;
-
-    Vector2 gaugeVec = new Vector2(50, 5);
-
-    public static float railSpeed = 15 ;
+    
+    
 
     // Start is called before the first frame update
     void Start()
@@ -33,11 +23,7 @@ public class CameraRayCast : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentSpeedText != null && selectber != null)
-        {
-            currentSpeedText.text = "選択中のスピード" + railSpeed;
-            Select();
-        }
+        Select();
     }
 
     private void Select()
@@ -47,39 +33,25 @@ public class CameraRayCast : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            currentButton = hit.collider.gameObject.name;
-            timer += Time.deltaTime;
-            selectber.fillAmount = timer / selectTime;
 
-
-            if (timer > selectTime)
+            if(hit.collider.tag == "button")
             {
-                switch (currentButton)
+                timer += Time.deltaTime;
+                ParaManager.instance.selectberFillAmount = timer / selectTime;
+                if (timer > selectTime)
                 {
-                    case "StartButton":
-                        selectber.fillAmount = 0;
-                        Loanch();
-                        break;
-                    default:
-                        selectber.fillAmount = 0;
-                        railSpeed = int.Parse(currentButton);
-                        currentSpeedText.text =
-                            "選択中のスピード" + currentButton;
-                        break;
+                    ParaManager.instance.selectberFillAmount = 0;
+                    ButtonBehaviour script = hit.transform.GetComponent<ButtonBehaviour>();
+                    script.selected();
                 }
             }
+            
         }
         else
         {
             timer = 0;
-            //selectGauge.sizeDelta = new Vector2(0, gaugeVec.y);
-            selectber.fillAmount = timer / selectTime;
+            ParaManager.instance.selectberFillAmount = timer / selectTime;
         }
     }
 
-    void Loanch()
-    {
-        int num = SceneManager.sceneCountInBuildSettings;
-        SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex + 1) % num);
-    }
 }
