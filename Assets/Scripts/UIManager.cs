@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
 
     Image selectber;
     Text currentModeText;
+    Text Playing_infoText;
 
     GameObject UseUI;
     // Start is called before the first frame update
@@ -39,7 +40,7 @@ public class UIManager : MonoBehaviour
 
         selectber = UseUI.transform.GetChild(1).gameObject.GetComponent<Image>();
         currentModeText = UseUI.transform.GetChild(2).gameObject.GetComponent<Text>();
-        
+        Playing_infoText = UseUI.transform.GetChild(3).gameObject.GetComponent<Text>();
     }
 
     // Update is called once per frame
@@ -56,10 +57,26 @@ public class UIManager : MonoBehaviour
                 currentModeText.enabled = true;
                 currentModeText.text = "‘I‘ğ’†‚ÌƒQ[ƒ€ƒ‚[ƒh\n" + ParaManager.instance.Mode;
                 WorldCanvas.SetActive(true);
+                Playing_infoText.enabled = false;
                 break;
             case SceneMode.Play:
                 currentModeText.enabled = false;
                 WorldCanvas.SetActive(false);
+                Playing_infoText.enabled = true;
+                switch (ParaManager.instance.Mode)
+                {
+                    case GameMode.TimeAttack:
+                        Playing_infoText.text = ParaManager.instance.killcount + "‘ÌŒ‚”j\nc‚è" + ParaManager.instance.targetnum.ToString("f1") + "•b";
+                        break;
+                    case GameMode.Extermination:
+                        Playing_infoText.text = ParaManager.instance.killcount + "‘ÌŒ‚”j\nc‚è" + ParaManager.instance.targetnum.ToString("f0") + "‘Ì";
+                        break;
+                    case GameMode.Practice:
+                        Playing_infoText.text = ParaManager.instance.killcount + "‘ÌŒ‚”j\nc‚è" + ParaManager.instance.targetnum.ToString("f1") +"•b";
+                        break;
+                    default:
+                        break;
+                }
 
                 break;
             case SceneMode.Result:

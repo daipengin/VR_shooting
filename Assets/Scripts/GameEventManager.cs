@@ -7,6 +7,8 @@ public class GameEventManager : MonoBehaviour
     static public GameEventManager instance;
 
 
+    float time;
+
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -22,6 +24,63 @@ public class GameEventManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Timer();
+    }
+
+
+    public void DethEnemy()
+    {
+        ParaManager.instance.killcount++;
+        switch (ParaManager.instance.Mode)
+        {
+            case GameMode.TimeAttack:
+                break;
+            case GameMode.Extermination:
+                ParaManager.instance.targetnum--;
+                break;
+            case GameMode.Practice:
+                break;
+            default:
+                break;
+        }
+    }
+
+    void Timer()
+    {
+        switch (ParaManager.instance._SceneMode)
+        {
+            case SceneMode.None:
+                break;
+            case SceneMode.Select:
+                time = ParaManager.instance.targetnum;
+                break;
+            case SceneMode.Play:
+                time -= Time.deltaTime;
+                switch (ParaManager.instance.Mode)
+                {
+                    case GameMode.TimeAttack:
+                        ParaManager.instance.targetnum = time;
+                        break;
+                    case GameMode.Extermination:
+                        break;
+                    case GameMode.Practice:
+                        ParaManager.instance.targetnum = time;
+                        break;
+                    default:
+                        break;
+                }
+
+                if(ParaManager.instance.targetnum <= 0)
+                {
+                    ParaManager.instance._SceneMode = SceneMode.Result;
+                    time = 3;
+                }
+
+                break;
+            case SceneMode.Result:
+                break;
+            default :
+                break;
+        }
     }
 }

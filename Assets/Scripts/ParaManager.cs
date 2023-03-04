@@ -26,6 +26,8 @@ public class ParaManager : MonoBehaviour
     [SerializeField]
     public float selectTime;
     [SerializeField]
+    public float shot_CT;
+    [SerializeField]
     public Vector2 camera_rotate_speeed;
 
 
@@ -36,7 +38,8 @@ public class ParaManager : MonoBehaviour
     public SceneMode _SceneMode = SceneMode.None;
 
     public float selectberFillAmount = 0;
-
+    public int killcount;
+    public float targetnum;
 
     private void Awake()
     {
@@ -47,8 +50,8 @@ public class ParaManager : MonoBehaviour
 #else
         //mousemode = false;
 #endif
-        Cursor.lockState = CursorLockMode.Locked;
-        _SceneMode = SceneMode.Select;
+        Reset_date();
+        
 
     }
 
@@ -63,6 +66,16 @@ public class ParaManager : MonoBehaviour
     {
         
     }
+    void Reset_date()
+    {
+        killcount = 0;
+        selectberFillAmount = 0;
+        _SceneMode = SceneMode.Select;
+        Mode = GameMode.Extermination;
+        targetnum = 1;
+    } 
+
+
 
     public void GoNextScene()
     {

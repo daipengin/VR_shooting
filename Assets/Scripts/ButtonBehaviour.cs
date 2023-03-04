@@ -33,17 +33,19 @@ public class ButtonBehaviour : MonoBehaviour
         switch (buttonType)
         {
             case ButtonType.StartButton:
-                //Debug.Log("ÉQÅ[ÉÄäJén");
                 ParaManager.instance._SceneMode = SceneMode.Play;
                 break;
             case ButtonType.SelectGameModeButton:
                 switch (gameMode)
                 {
                     case GameMode.TimeAttack:
+                        ParaManager.instance.targetnum = 60;
                         break;
                     case GameMode.Extermination:
+                        ParaManager.instance.targetnum = 10;
                         break;
                     case GameMode.Practice:
+                        ParaManager.instance.targetnum = 60;
                         break;
                     default:
                         break;
