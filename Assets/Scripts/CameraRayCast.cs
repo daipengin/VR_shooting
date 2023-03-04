@@ -8,12 +8,7 @@ public class CameraRayCast : MonoBehaviour
 {
 
     float timer = 0;
-
-    [SerializeField]
-    float selectTime;
-    
-    
-
+    Collider selected = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,21 +31,29 @@ public class CameraRayCast : MonoBehaviour
 
             if(hit.collider.tag == "button")
             {
-                timer += Time.deltaTime;
-                ParaManager.instance.selectberFillAmount = timer / selectTime;
-                if (timer > selectTime)
+                if(selected != hit.collider)
                 {
-                    ParaManager.instance.selectberFillAmount = 0;
-                    ButtonBehaviour script = hit.transform.GetComponent<ButtonBehaviour>();
-                    script.selected();
+                    timer += Time.deltaTime;
+                    ParaManager.instance.selectberFillAmount = timer / ParaManager.instance.selectTime;
+                    if (timer > ParaManager.instance.selectTime)
+                    {
+                        ParaManager.instance.selectberFillAmount = 0;
+                        ButtonBehaviour script = hit.transform.GetComponent<ButtonBehaviour>();
+                        script.selected();
+                        selected = hit.collider;
+                        timer = 0;
+                        ParaManager.instance.selectberFillAmount = timer / ParaManager.instance.selectTime;
+                    }
                 }
+                
             }
             
         }
         else
         {
+            selected = null;
             timer = 0;
-            ParaManager.instance.selectberFillAmount = timer / selectTime;
+            ParaManager.instance.selectberFillAmount = timer / ParaManager.instance.selectTime;
         }
     }
 

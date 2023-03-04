@@ -19,7 +19,7 @@ public class ButtonBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        transform.tag = "button";   
     }
 
     // Update is called once per frame
@@ -33,6 +33,8 @@ public class ButtonBehaviour : MonoBehaviour
         switch (buttonType)
         {
             case ButtonType.StartButton:
+                //Debug.Log("ÉQÅ[ÉÄäJén");
+                ParaManager.instance._SceneMode = SceneMode.Play;
                 break;
             case ButtonType.SelectGameModeButton:
                 switch (gameMode)
@@ -46,7 +48,7 @@ public class ButtonBehaviour : MonoBehaviour
                     default:
                         break;
                 }
-
+                ParaManager.instance.Mode = gameMode;
                 break;
             default:
                 break;

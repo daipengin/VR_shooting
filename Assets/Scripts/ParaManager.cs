@@ -8,21 +8,35 @@ public enum GameMode
     None,
     TimeAttack,
     Extermination,
-    Practice
+    Practice,
+}
+
+public enum SceneMode
+{
+    None,
+    Select,
+    Play,
+    Result
 }
 
 public class ParaManager : MonoBehaviour
 {
     [SerializeField]
     public bool mousemode = true;
+    [SerializeField]
+    public float selectTime;
+    [SerializeField]
+    public Vector2 camera_rotate_speeed;
 
 
 
     static public ParaManager instance;
 
     public GameMode Mode = GameMode.None;
+    public SceneMode _SceneMode = SceneMode.None;
 
     public float selectberFillAmount = 0;
+
 
     private void Awake()
     {
@@ -33,6 +47,9 @@ public class ParaManager : MonoBehaviour
 #else
         //mousemode = false;
 #endif
+        Cursor.lockState = CursorLockMode.Locked;
+        _SceneMode = SceneMode.Select;
+
     }
 
     // Start is called before the first frame update

@@ -39,15 +39,15 @@ public class Gyro : MonoBehaviour
         Screen.orientation = ScreenOrientation.Portrait;
     }
 
-    float xRotation = 0f;
+    float xRotation = 0.5f;
     // Update is called once per frame
     void Update()
     {
 
         if (mousemode)
         {
-            float mouseX = Input.GetAxis("Mouse X") * 300 * Time.deltaTime;
-            float mouseY = Input.GetAxis("Mouse Y") * 300 * Time.deltaTime;
+            float mouseX = Input.GetAxis("Mouse X") * ParaManager.instance.camera_rotate_speeed.x * Time.deltaTime;
+            float mouseY = Input.GetAxis("Mouse Y") * ParaManager.instance.camera_rotate_speeed.y * Time.deltaTime;
 
             xRotation -= mouseY;
             xRotation = Mathf.Clamp(xRotation, -90f, 90f);

@@ -7,6 +7,8 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField]
     public GameObject VRCanvas, MouseCanvas;
+    [SerializeField]
+    GameObject WorldCanvas;
 
     bool mousemode;
 
@@ -37,11 +39,38 @@ public class UIManager : MonoBehaviour
 
         selectber = UseUI.transform.GetChild(1).gameObject.GetComponent<Image>();
         currentModeText = UseUI.transform.GetChild(2).gameObject.GetComponent<Text>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         selectber.fillAmount = ParaManager.instance.selectberFillAmount;
+
+        switch (ParaManager.instance._SceneMode)
+        {
+            case SceneMode.None:
+                break;
+            case SceneMode.Select:
+                currentModeText.enabled = true;
+                currentModeText.text = "選択中のゲームモード\n" + ParaManager.instance.Mode;
+                WorldCanvas.SetActive(true);
+                break;
+            case SceneMode.Play:
+                currentModeText.enabled = false;
+                WorldCanvas.SetActive(false);
+
+                break;
+            case SceneMode.Result:
+                break;
+            default:
+                break;
+        }
+        
+        
+
+
     }
+
 }
