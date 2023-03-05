@@ -14,6 +14,11 @@ public class Enemy : MonoBehaviour
 
     [SerializeField]
     GameObject Canvas;
+
+    [SerializeField]
+    GameObject ship;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +35,7 @@ public class Enemy : MonoBehaviour
         transform.Translate(vec * Move_Speed*Time.deltaTime);
         HPber.fillAmount = HP / MaxHP;
         Canvas.transform.LookAt(target);
+        ship.transform.LookAt(target);
 
 
         if(ParaManager.instance._SceneMode != SceneMode.Play) Destroy(gameObject);

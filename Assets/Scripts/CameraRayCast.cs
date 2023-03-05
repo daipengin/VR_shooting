@@ -57,7 +57,7 @@ public class CameraRayCast : MonoBehaviour
                         timer = 0;
                         Vector3 pos = transform.position;
                         if (ParaManager.instance.mousemode) pos.y -= 0.5f;
-                        else pos.x -= 0.5f; 
+                        else pos.y -= 0.5f; 
                         GameObject obj = Instantiate(bullet,pos,Quaternion.identity);
                         obj.transform.GetComponent<bullet>().target = hit.point;
                     }
