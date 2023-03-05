@@ -6,6 +6,7 @@ public enum ButtonType{
     None,
     StartButton,
     SelectGameModeButton,
+    ResultButton
 }
 
 public class ButtonBehaviour : MonoBehaviour
@@ -36,6 +37,8 @@ public class ButtonBehaviour : MonoBehaviour
                 ParaManager.instance._SceneMode = SceneMode.Play;
                 break;
             case ButtonType.SelectGameModeButton:
+                ParaManager.instance.Reset_date(gameMode);
+                /*
                 switch (gameMode)
                 {
                     case GameMode.TimeAttack:
@@ -50,7 +53,11 @@ public class ButtonBehaviour : MonoBehaviour
                     default:
                         break;
                 }
-                ParaManager.instance.Mode = gameMode;
+                ParaManager.instance.Mode = gameMode;*/
+                break;
+            case ButtonType.ResultButton:
+                ParaManager.instance._SceneMode = SceneMode.Select;
+                ParaManager.instance.Reset_date(ParaManager.instance.Mode);
                 break;
             default:
                 break;

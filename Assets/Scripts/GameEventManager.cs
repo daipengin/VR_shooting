@@ -55,15 +55,19 @@ public class GameEventManager : MonoBehaviour
                 time = ParaManager.instance.targetnum;
                 break;
             case SceneMode.Play:
-                time -= Time.deltaTime;
+                
                 switch (ParaManager.instance.Mode)
                 {
                     case GameMode.TimeAttack:
+                        time -= Time.deltaTime;
                         ParaManager.instance.targetnum = time;
                         break;
                     case GameMode.Extermination:
+                        time += Time.deltaTime;
+                        ParaManager.instance.PlayingTime = time;
                         break;
                     case GameMode.Practice:
+                        time -= Time.deltaTime;
                         ParaManager.instance.targetnum = time;
                         break;
                     default:

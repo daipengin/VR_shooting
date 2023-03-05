@@ -105,7 +105,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5592472863248468417}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.96, z: 30}
+  m_LocalPosition: {x: 0, y: 0, z: 30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -192,6 +192,7 @@ MonoBehaviour:
   Move_Speed: 1
   MaxHP: 10
   HPber: {fileID: 5592472863334161046}
+  Canvas: {fileID: 5592472863697538795}
 --- !u!54 &5592472863248468443
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -206,7 +207,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!1 &5592472863334161048
 GameObject:

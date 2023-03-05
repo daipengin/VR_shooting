@@ -34,23 +34,25 @@ public class ParaManager : MonoBehaviour
 
     static public ParaManager instance;
 
-    public GameMode Mode = GameMode.None;
+    public GameMode Mode = GameMode.Extermination;
     public SceneMode _SceneMode = SceneMode.None;
 
     public float selectberFillAmount = 0;
     public int killcount;
     public float targetnum;
 
+    public float PlayingTime;
+
     private void Awake()
     {
         if(instance == null) instance = this;
         else Destroy(gameObject);
 #if UNITY_EDITOR
-        //mousemode = true;
+        mousemode = true;
 #else
-        //mousemode = false;
+        mousemode = false;
 #endif
-        Reset_date();
+        Reset_date(ParaManager.instance.Mode);
         
 
     }
@@ -66,13 +68,27 @@ public class ParaManager : MonoBehaviour
     {
         
     }
-    void Reset_date()
+    public void Reset_date(GameMode mode)
     {
         killcount = 0;
         selectberFillAmount = 0;
-        _SceneMode = SceneMode.Select;
-        Mode = GameMode.Extermination;
-        targetnum = 1;
+        switch (mode)
+        {
+            case GameMode.TimeAttack:
+                targetnum = 60;
+                break;
+            case GameMode.Extermination:
+                targetnum = 10;
+                break;
+            case GameMode.Practice:
+                targetnum = 60;
+                break;
+            default:
+                break;
+        }
+        Mode = mode;       
+        //_SceneMode = SceneMode.Select;
+        
     } 
 
 

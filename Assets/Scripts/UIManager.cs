@@ -9,12 +9,15 @@ public class UIManager : MonoBehaviour
     public GameObject VRCanvas, MouseCanvas;
     [SerializeField]
     GameObject WorldCanvas;
+    [SerializeField]
+    GameObject ResultCanvas;
 
     bool mousemode;
 
     Image selectber;
     Text currentModeText;
     Text Playing_infoText;
+    Text ResultText;
 
     GameObject UseUI;
     // Start is called before the first frame update
@@ -41,6 +44,7 @@ public class UIManager : MonoBehaviour
         selectber = UseUI.transform.GetChild(1).gameObject.GetComponent<Image>();
         currentModeText = UseUI.transform.GetChild(2).gameObject.GetComponent<Text>();
         Playing_infoText = UseUI.transform.GetChild(3).gameObject.GetComponent<Text>();
+        ResultText = UseUI.transform.GetChild(4).gameObject.GetComponent<Text>();
     }
 
     // Update is called once per frame
@@ -57,12 +61,16 @@ public class UIManager : MonoBehaviour
                 currentModeText.enabled = true;
                 currentModeText.text = "ëIëíÜÇÃÉQÅ[ÉÄÉÇÅ[Éh\n" + ParaManager.instance.Mode;
                 WorldCanvas.SetActive(true);
+                ResultCanvas.SetActive(false);
                 Playing_infoText.enabled = false;
+                ResultText.enabled = false;
                 break;
             case SceneMode.Play:
                 currentModeText.enabled = false;
                 WorldCanvas.SetActive(false);
+                ResultCanvas.SetActive(false);
                 Playing_infoText.enabled = true;
+                ResultText.enabled = false;
                 switch (ParaManager.instance.Mode)
                 {
                     case GameMode.TimeAttack:
@@ -80,6 +88,25 @@ public class UIManager : MonoBehaviour
 
                 break;
             case SceneMode.Result:
+                currentModeText.enabled = false;
+                WorldCanvas.SetActive(false);
+                ResultCanvas.SetActive(true);
+                Playing_infoText.enabled = false;
+                ResultText.enabled = true;
+                switch (ParaManager.instance.Mode)
+                {
+                    case GameMode.TimeAttack:
+                        ResultText.text ="åãâ \n"+ ParaManager.instance.killcount + "ëÃåÇîj";
+                        break;
+                    case GameMode.Extermination:
+                        ResultText.text = "åãâ \n" + ParaManager.instance.PlayingTime.ToString("f1") + "ïbÇ≈åÇîj";
+                        break;
+                    case GameMode.Practice:
+                        ResultText.text = "åãâ \n" + ParaManager.instance.killcount + "ëÃåÇîj";
+                        break;
+                    default:
+                        break;
+                }
                 break;
             default:
                 break;

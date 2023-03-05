@@ -18,7 +18,12 @@ public class EnemyGenerator : MonoBehaviour
     [SerializeField]
     Transform target;
 
+    [SerializeField]
+    float Gen_Ypos;
     float time;
+
+    List<GameObject> enemylist;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,21 +33,41 @@ public class EnemyGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        time += Time.deltaTime;
-        if (time > GenCT)
+        switch (ParaManager.instance._SceneMode)
         {
-            GenerateEnemy();
-            time = 0;
+            case SceneMode.None:
+                break;
+            case SceneMode.Select:
+                time = 0;
+                break;
+            case SceneMode.Play:
+                time += Time.deltaTime;
+                if (time > GenCT)
+                {
+                    GenerateEnemy();
+                    time = 0;
+                }
+
+                break;
+            case SceneMode.Result:
+                
+                break;
+            default:
+                break;
         }
+        
     }
 
     public void GenerateEnemy()
     {
         GameObject enemy = Instantiate(Enemy_prefab, transform);
         float range = Random.Range(Min_range, Max_range);
-        enemy.transform.rotation = Quaternion.Euler(0, Random.value *360, 0);
-        enemy.transform.Translate(transform.forward * range);
+        float rad_range = Random.Range(0f, 2f * Mathf.PI);
+        Vector3 pos = new Vector3(range * Mathf.Sin(rad_range), Gen_Ypos, range * Mathf.Cos(rad_range));
+        enemy.transform.position = pos;
         Enemy script = enemy.GetComponent<Enemy>();
         script.target = target;
     }
+
+
 }

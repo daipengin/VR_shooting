@@ -11,6 +11,9 @@ public class Enemy : MonoBehaviour
     public float MaxHP;
     [SerializeField]
     Image HPber;
+
+    [SerializeField]
+    GameObject Canvas;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +29,10 @@ public class Enemy : MonoBehaviour
         vec.Normalize();
         transform.Translate(vec * Move_Speed*Time.deltaTime);
         HPber.fillAmount = HP / MaxHP;
+        Canvas.transform.LookAt(target);
+
+
+        if(ParaManager.instance._SceneMode != SceneMode.Play) Destroy(gameObject);
     }
 
     public void GetDamege(float damege)
@@ -45,6 +52,10 @@ public class Enemy : MonoBehaviour
             bullet script = other.transform.GetComponent<bullet>();
             GetDamege(script.bulletDamede);
             Destroy(script.gameObject);
+        }
+        if(other.tag == "Player")
+        {
+            Destroy(gameObject);
         }
     }
 }
