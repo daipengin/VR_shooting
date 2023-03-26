@@ -11,10 +11,16 @@ public class CameraRayCast : MonoBehaviour
     Collider selected = null;
     [SerializeField]
     GameObject bullet;
+
+    AudioSource AS;
+    [SerializeField]
+    AudioClip shot_Clip;
+    [SerializeField]
+    AudioClip select_Clip;
     // Start is called before the first frame update
     void Start()
     {
-        
+        AS = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -44,6 +50,7 @@ public class CameraRayCast : MonoBehaviour
                             script.selected();
                             selected = hit.collider;
                             timer = 0;
+                            AS.PlayOneShot(select_Clip,1f);
                         }
                     }
                     break;
@@ -60,6 +67,7 @@ public class CameraRayCast : MonoBehaviour
                         else pos.y -= 0.5f; 
                         GameObject obj = Instantiate(bullet,pos,Quaternion.identity);
                         obj.transform.GetComponent<bullet>().target = hit.point;
+                        AS.PlayOneShot(shot_Clip,0.7f);
                     }
                     break;
                 default:

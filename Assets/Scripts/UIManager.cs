@@ -59,7 +59,8 @@ public class UIManager : MonoBehaviour
                 break;
             case SceneMode.Select:
                 currentModeText.enabled = true;
-                currentModeText.text = "‘I‘ğ’†‚ÌƒQ[ƒ€ƒ‚[ƒh\n" + ParaManager.instance.Mode;
+                //currentModeText.text = "‘I‘ğ’†‚ÌƒQ[ƒ€ƒ‚[ƒh\n" + ParaManager.instance.Mode;
+                currentModeText.text = "‘I‘ğ’†‚Ì“ïˆÕ“x\n" + ParaManager.instance.Diff;
                 WorldCanvas.SetActive(true);
                 ResultCanvas.SetActive(false);
                 Playing_infoText.enabled = false;
@@ -73,8 +74,8 @@ public class UIManager : MonoBehaviour
                 ResultText.enabled = false;
                 switch (ParaManager.instance.Mode)
                 {
-                    case GameMode.TimeAttack:
-                        Playing_infoText.text = ParaManager.instance.killcount + "‘ÌŒ‚”j\nc‚è" + ParaManager.instance.targetnum.ToString("f1") + "•b";
+                    case GameMode.ScoreAttack:
+                        Playing_infoText.text = "Score:"+ParaManager.instance.Score+"“_\n" + ParaManager.instance.killcount + "‘ÌŒ‚”j\nc‚è" + ParaManager.instance.targetnum.ToString("f1") + "•b";
                         break;
                     case GameMode.Extermination:
                         Playing_infoText.text = ParaManager.instance.killcount + "‘ÌŒ‚”j\nc‚è" + ParaManager.instance.targetnum.ToString("f0") + "‘Ì";
@@ -95,8 +96,8 @@ public class UIManager : MonoBehaviour
                 ResultText.enabled = true;
                 switch (ParaManager.instance.Mode)
                 {
-                    case GameMode.TimeAttack:
-                        ResultText.text ="Œ‹‰Ê\n"+ ParaManager.instance.killcount + "‘ÌŒ‚”j";
+                    case GameMode.ScoreAttack:
+                        ResultText.text = "Œ‹‰Ê\n" + ParaManager.instance.killcount + "‘ÌŒ‚”j "+ParaManager.instance.damagecount+"‘Ì”í’e\n" +ParaManager.instance.Score +"“_";
                         break;
                     case GameMode.Extermination:
                         ResultText.text = "Œ‹‰Ê\n" + ParaManager.instance.PlayingTime.ToString("f1") + "•b‚ÅŒ‚”j";

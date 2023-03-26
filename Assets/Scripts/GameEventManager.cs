@@ -30,10 +30,10 @@ public class GameEventManager : MonoBehaviour
 
     public void DethEnemy()
     {
-        ParaManager.instance.killcount++;
+        
         switch (ParaManager.instance.Mode)
         {
-            case GameMode.TimeAttack:
+            case GameMode.ScoreAttack:
                 break;
             case GameMode.Extermination:
                 ParaManager.instance.targetnum--;
@@ -58,7 +58,7 @@ public class GameEventManager : MonoBehaviour
                 
                 switch (ParaManager.instance.Mode)
                 {
-                    case GameMode.TimeAttack:
+                    case GameMode.ScoreAttack:
                         time -= Time.deltaTime;
                         ParaManager.instance.targetnum = time;
                         break;

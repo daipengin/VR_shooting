@@ -6,6 +6,7 @@ public enum ButtonType{
     None,
     StartButton,
     SelectGameModeButton,
+    SelectGameDifficulty,
     ResultButton
 }
 
@@ -13,6 +14,9 @@ public class ButtonBehaviour : MonoBehaviour
 {
     [SerializeField]
     GameMode gameMode;
+
+    [SerializeField]
+    Difficulty difficulty;
 
     [SerializeField]
     ButtonType buttonType;
@@ -37,11 +41,11 @@ public class ButtonBehaviour : MonoBehaviour
                 ParaManager.instance._SceneMode = SceneMode.Play;
                 break;
             case ButtonType.SelectGameModeButton:
-                ParaManager.instance.Reset_date(gameMode);
+                ParaManager.instance.Reset_GameMode(gameMode);
                 /*
                 switch (gameMode)
                 {
-                    case GameMode.TimeAttack:
+                    case GameMode.ScoreAttack:
                         ParaManager.instance.targetnum = 60;
                         break;
                     case GameMode.Extermination:
@@ -57,7 +61,11 @@ public class ButtonBehaviour : MonoBehaviour
                 break;
             case ButtonType.ResultButton:
                 ParaManager.instance._SceneMode = SceneMode.Select;
-                ParaManager.instance.Reset_date(ParaManager.instance.Mode);
+                //ParaManager.instance.Reset_GameMode(ParaManager.instance.Mode);
+                ParaManager.instance.Reset_Difficulty(ParaManager.instance.Diff);
+                break;
+            case ButtonType.SelectGameDifficulty:
+                ParaManager.instance.Reset_Difficulty(difficulty);
                 break;
             default:
                 break;

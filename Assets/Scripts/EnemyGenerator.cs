@@ -8,6 +8,9 @@ public class EnemyGenerator : MonoBehaviour
     GameObject Enemy_prefab;
 
     [SerializeField]
+    GameObject meteorite_prefab;
+
+    [SerializeField]
     float Min_range;
     [SerializeField]
     float Max_range;
@@ -27,6 +30,7 @@ public class EnemyGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GenCT = ParaManager.instance.Enemy_Generate_Time;
         time = 0;
     }
 
@@ -45,6 +49,7 @@ public class EnemyGenerator : MonoBehaviour
                 if (time > GenCT)
                 {
                     GenerateEnemy();
+                    GenerateMeteorite();
                     time = 0;
                 }
 
@@ -58,15 +63,33 @@ public class EnemyGenerator : MonoBehaviour
         
     }
 
-    public void GenerateEnemy()
+    public void GenerateEnemy(bool isRandom = true)
     {
         GameObject enemy = Instantiate(Enemy_prefab, transform);
         float range = Random.Range(Min_range, Max_range);
         float rad_range = Random.Range(0f, 2f * Mathf.PI);
-        Vector3 pos = new Vector3(range * Mathf.Sin(rad_range), Gen_Ypos, range * Mathf.Cos(rad_range));
+        Vector3 pos;
+        if(isRandom) pos = new Vector3(range * Mathf.Sin(rad_range), Gen_Ypos, range * Mathf.Cos(rad_range));
+        else pos = transform.position;
         enemy.transform.position = pos;
         Enemy script = enemy.GetComponent<Enemy>();
         script.target = target;
+        script.ES = ParaManager.instance.Enemy_status_pre;
+    }
+
+    public void GenerateMeteorite(bool isRandom = true)
+    {
+        GameObject meteorite = Instantiate(meteorite_prefab, transform);
+        float range = Random.Range(Min_range, Max_range);
+        float rad_range = Random.Range(0f, 2f * Mathf.PI);
+        Vector3 pos;
+        if(isRandom) pos = new Vector3(range * Mathf.Sin(rad_range), Gen_Ypos, range * Mathf.Cos(rad_range));
+        else pos = transform.position;
+        meteorite.transform.position = pos;
+        Enemy script = meteorite.GetComponent<Enemy>();
+        script.target = target;
+        script .ES = ParaManager.instance.Meteorite_status_pre;
+
     }
 
 

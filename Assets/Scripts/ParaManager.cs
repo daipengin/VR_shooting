@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public enum GameMode
 {
     None,
-    TimeAttack,
+    ScoreAttack,
     Extermination,
     Practice,
 }
@@ -17,6 +17,24 @@ public enum SceneMode
     Select,
     Play,
     Result
+}
+
+public enum Difficulty
+{
+    Easy,
+    Normal,
+    Hard,
+    Expert
+}
+
+public struct EnemyStatus{
+    public float MaxHP;
+    public float Speed;
+    public float Warp_CT;
+    public int GetScore;
+    public int LostScore;
+    public EnemyType type;
+
 }
 
 public class ParaManager : MonoBehaviour
@@ -34,26 +52,42 @@ public class ParaManager : MonoBehaviour
 
     static public ParaManager instance;
 
-    public GameMode Mode = GameMode.Extermination;
+    public GameMode Mode = GameMode.ScoreAttack;
     public SceneMode _SceneMode = SceneMode.None;
+    public Difficulty Diff = Difficulty.Easy;
 
     public float selectberFillAmount = 0;
     public int killcount;
+    public int damagecount;
+    public int Score;
     public float targetnum;
 
     public float PlayingTime;
 
+
+    public float Enemy_Generate_Time;
+
+    public EnemyStatus Enemy_status_pre;
+    public EnemyStatus Meteorite_status_pre;
+
+  
+
+
+
+
     private void Awake()
     {
-        if(instance == null) instance = this;
+        Mode = GameMode.ScoreAttack;
+        if (instance == null) instance = this;
         else Destroy(gameObject);
 #if UNITY_EDITOR
         mousemode = true;
 #else
         mousemode = false;
 #endif
-        Reset_date(ParaManager.instance.Mode);
-        
+
+        //Reset_GameMode(ParaManager.instance.Mode);
+        Reset_Difficulty(ParaManager.instance.Diff);
 
     }
 
@@ -68,13 +102,13 @@ public class ParaManager : MonoBehaviour
     {
         
     }
-    public void Reset_date(GameMode mode)
+    public void Reset_GameMode(GameMode mode)
     {
         killcount = 0;
         selectberFillAmount = 0;
         switch (mode)
         {
-            case GameMode.TimeAttack:
+            case GameMode.ScoreAttack:
                 targetnum = 60;
                 break;
             case GameMode.Extermination:
@@ -90,6 +124,91 @@ public class ParaManager : MonoBehaviour
         //_SceneMode = SceneMode.Select;
         
     } 
+
+    public void Reset_Difficulty(Difficulty diff)
+    {
+        killcount = 0;
+        selectberFillAmount = 0;
+        targetnum = 60;
+        Score = 0;
+        damagecount = 0;
+        switch (diff)
+        {
+            case Difficulty.Easy:
+
+                Enemy_Generate_Time = 5;
+                Enemy_status_pre = new EnemyStatus
+                {
+                    Speed = 0.7f,
+                    MaxHP = 3,
+                    Warp_CT = 10,
+                    GetScore = 10,
+                    LostScore = 5,
+                    type = EnemyType.warp
+                };
+                Meteorite_status_pre = new EnemyStatus
+                {
+                    Speed = 0.7f,
+                    MaxHP = 3,
+                    Warp_CT = 10,
+                    GetScore = 10,
+                    LostScore = 5,
+                    type = EnemyType.straight
+                };
+
+                break;
+            case Difficulty.Normal:
+                Enemy_Generate_Time = 3;
+                Enemy_status_pre = new EnemyStatus
+                {
+                    Speed = 1f,
+                    MaxHP = 5,
+                    Warp_CT = 5,
+                    GetScore = 50,
+                    LostScore = 40,
+                    type = EnemyType.warp
+                };
+                Meteorite_status_pre = new EnemyStatus
+                {
+                    Speed = 1.1f,
+                    MaxHP = 6,
+                    Warp_CT = 0,
+                    GetScore = 50,
+                    LostScore = 20,
+                    type = EnemyType.straight
+                };
+
+                break;
+            case Difficulty.Hard:
+                Enemy_Generate_Time = 5;
+                Enemy_status_pre = new EnemyStatus
+                {
+                    Speed = 1.5f,
+                    MaxHP = 10,
+                    Warp_CT = 3,
+                    GetScore = 150,
+                    LostScore = 200,
+                    type = EnemyType.warp
+                };
+                Meteorite_status_pre = new EnemyStatus
+                {
+                    Speed = 2f,
+                    MaxHP = 15,
+                    Warp_CT = 0,
+                    GetScore = 150,
+                    LostScore = 100,
+                    type = EnemyType.straight
+                };
+
+                break;
+            case Difficulty.Expert:
+                break;
+            default:
+                break;
+        }
+        Diff = diff;
+        
+    }
 
 
 

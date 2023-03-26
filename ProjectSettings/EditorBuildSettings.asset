@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Title.unity
+    path: Assets/Scenes/Univers_shooting.unity
     guid: 814c7af1e04e044058602023ab193590
   - enabled: 0
     path: 
